@@ -2,19 +2,19 @@ import { Link } from 'react-router-dom';
 import DropdownUser from './DropdownUser';
 import LogoIcon from '../../images/logo/logo-icon.svg';
 import DarkModeSwitcher from './DarkModeSwitcher';
-import useAuthentication from '../../hooks/useAuthentication';
 import cl from 'classnames';
 import Button from '../../components/Button';
 import Authentication, {
   ExposeApi as AuthenticationApi,
 } from '../Authentication';
-import React from 'react';
+import React, { useContext } from 'react';
+import { AuthenticationContext } from '../contexts';
 
 const Header = (props: {
   sidebarOpen: string | boolean | undefined;
   setSidebarOpen: (arg0: boolean) => void;
 }) => {
-  const { isAuthenticated } = useAuthentication();
+  const { isAuthenticated } = useContext(AuthenticationContext);
   const authenRef = React.useRef<AuthenticationApi>(null);
 
   return (

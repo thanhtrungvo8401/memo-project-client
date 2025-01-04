@@ -4,7 +4,7 @@ import { ILesson, IVocabulary } from '../../database/type';
 import ActionsFormGroup from './components/ActionsFormGroup';
 import VocabularyItem from './components/VocaItem';
 import { lessonRepo } from '../../database/Lesson';
-import React from 'react';
+import React, { useContext } from 'react';
 import { vocabularyRepo } from '../../database/Vocabulary';
 import Empty from '../../components/Empty';
 import { useVocabulary, VocabularyContext } from './contexts';
@@ -12,6 +12,7 @@ import { initialLesson } from '../../containers/Sidebar/contexts';
 import ArrowTopRight from '../../components/icons/ArrowTopRIght';
 import LearningPlatform from './components/LearningPlatform';
 import PreviewPlatform from './components/PreviewPlatform';
+import { AuthenticationContext } from '../../containers/contexts';
 
 const LearningMaterialDetail: React.FC = () => {
   let { id } = useParams();
@@ -21,6 +22,7 @@ const LearningMaterialDetail: React.FC = () => {
   const [isLearning, setIsLearning] = React.useState(false);
   const [isPreviewing, setIsPreviewing] = React.useState(false);
   const vocabValues = useVocabulary(lesson);
+  const { isAuthenticated } = useContext(AuthenticationContext);
 
   const getLessonDetail = async (id: string) => {
     try {
@@ -67,6 +69,10 @@ const LearningMaterialDetail: React.FC = () => {
       getVocabulariesList(id);
     }
   }, [id]);
+
+  React.useEffect(() => {
+    if (!isAuthenticated) navigate('/');
+  }, [isAuthenticated]);
 
   const pageTitle = !lesson?.title ? (
     'NOT FOUND'

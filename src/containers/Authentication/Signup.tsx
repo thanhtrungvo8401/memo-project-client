@@ -1,12 +1,13 @@
 import React, { ChangeEvent } from 'react';
 import Button from '../../components/Button';
 import Input from '../../components/Input';
+import useSignup from './hooks/useSignup';
 
 const Header = (props: { onClose: () => void }) => {
   return (
     <div className="flex items-center justify-between p-4 md:p-5 border-b border-stroke rounded-t dark:border-strokedark">
-      <h3 className="text-lg font-semibold text-black dark:text-white">
-        Login
+      <h3 className="text-2xl font-semibold text-black dark:text-white">
+        Sign up
       </h3>
 
       <button
@@ -40,35 +41,48 @@ const SignupForm = (props: {
   closeForm: () => void;
   openLoginForm: () => void;
 }) => {
-  const [error, setError] = React.useState<{ title?: string }>({
-    title: undefined,
-  });
+  const { signUp } = useSignup();
 
-  const onSubmitForm = (e: any) => {
+  const [data, setData] = React.useState<{
+    username: string;
+    password: string;
+    confirmPassword: string;
+  }>({
+    username: '',
+    password: '',
+    confirmPassword: '',
+  });
+  const [error, setError] = React.useState<{
+    username?: string;
+    password?: string;
+    confirmPassword?: string;
+  }>({});
+
+  const onSubmitForm = async (e: any) => {
     e?.preventDefault();
+    if (!data.username) return setError({ username: 'Required' });
+    else if (!data.password) return setError({ password: 'Required' });
+    else if (data.password?.length < 6)
+      return setError({ password: 'Password length must not less than 6' });
+    else if (data.password !== data.confirmPassword)
+      return setError({ confirmPassword: 'Confirm password not match' });
+
+    const user = await signUp(data);
+    if (user) {
+      props.openLoginForm();
+    }
   };
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
-    // const { name, value } = e.target;
+    const { name, value } = e.target;
 
-    // setLesson({
-    //   ...lesson,
-    //   [name]: value,
-    // });
+    setData({
+      ...data,
+      [name]: value,
+    });
 
     setError({});
   };
-
-  // React.useImperativeHandle(ref, () => {
-  //   return {
-  //     open: () => {
-  //       modalRef.current?.open();
-  //     },
-  //     close: () => {
-  //       modalRef.current?.close();
-  //     },
-  //   };
-  // }, []);
 
   return (
     <>
@@ -80,27 +94,30 @@ const SignupForm = (props: {
           onSubmit={(e) => onSubmitForm(e)}
           action="/"
         >
-          <Input name="username" onChange={handleOnChange} label="username" />
+          <Input
+            name="username"
+            onChange={handleOnChange}
+            label="username"
+            error={error.username}
+          />
 
-          <Input name="password" onChange={handleOnChange} label="password" />
+          <Input
+            error={error.password}
+            name="password"
+            onChange={handleOnChange}
+            label="password"
+            type="password"
+          />
 
-          <Button.Primary onClick={() => {}} type="submit">
-            <>
-              <svg
-                className="me-1 -ms-1 w-5 h-5"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                  clipRule="evenodd"
-                ></path>
-              </svg>
-              Signup
-            </>
-          </Button.Primary>
+          <Input
+            error={error.confirmPassword}
+            name="confirmPassword"
+            onChange={handleOnChange}
+            label="Confirm password"
+            type="password"
+          />
+
+          <Button.Primary type="submit">Sign up</Button.Primary>
 
           <p className="mt-4">
             Already have an account?{' '}

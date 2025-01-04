@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useContext, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 import Logo from '../../images/logo/logo-icon.svg';
 import { AppRoutes } from '../../constants/routes';
@@ -8,7 +8,7 @@ import CreateNewMaterialForm from './MaterialsListing/components/RequestForm';
 import Button from '../../components/Button';
 import { LessonContext, useLessons } from './contexts';
 import DeleteLessonConfirmModal from './MaterialsListing/components/DeleteLessonConfirmModal';
-import useAuthentication from '../../hooks/useAuthentication';
+import { AuthenticationContext } from '../contexts';
 interface SidebarProps {
   sidebarOpen: boolean;
   setSidebarOpen: (arg: boolean) => void;
@@ -21,7 +21,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const confirmDeleteRef = useRef<any>(null);
   const requestForm = useRef<{ open: () => void; close: () => void }>(null);
   const lessonValues = useLessons();
-  const { isAuthenticated } = useAuthentication();
+  const { isAuthenticated } = useContext(AuthenticationContext);
 
   return (
     <LessonContext.Provider
@@ -64,7 +64,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
           {
             'translate-x-0': sidebarOpen,
             '-translate-x-full': !sidebarOpen,
-            'hidden': !isAuthenticated
+            hidden: !isAuthenticated,
           },
         )}
       >

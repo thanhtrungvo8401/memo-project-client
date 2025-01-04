@@ -58,7 +58,7 @@ const Input = (props: PropsType) => {
       <input
         type={type}
         name={name}
-        id="name"
+        id={name}
         className={cl(
           'w-full rounded-lg border-[1.5px] bg-transparent py-2 md:py-3 px-4 md:px-5  outline-none transition',
           {
