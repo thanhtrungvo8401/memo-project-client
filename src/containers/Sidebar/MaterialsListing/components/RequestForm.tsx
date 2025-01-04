@@ -77,16 +77,20 @@ const RequestForm = React.forwardRef<
     setError({});
   };
 
-  React.useImperativeHandle(ref, () => {
-    return {
-      open: () => {
-        modalRef.current?.open();
-      },
-      close: () => {
-        modalRef.current?.close();
-      },
-    };
-  }, []);
+  React.useImperativeHandle(
+    ref,
+    () => {
+      return {
+        open: () => {
+          modalRef.current?.open();
+        },
+        close: () => {
+          modalRef.current?.close();
+        },
+      };
+    },
+    [],
+  );
 
   return (
     <>

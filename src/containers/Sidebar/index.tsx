@@ -8,6 +8,7 @@ import CreateNewMaterialForm from './MaterialsListing/components/RequestForm';
 import Button from '../../components/Button';
 import { LessonContext, useLessons } from './contexts';
 import DeleteLessonConfirmModal from './MaterialsListing/components/DeleteLessonConfirmModal';
+import useAuthentication from '../../hooks/useAuthentication';
 interface SidebarProps {
   sidebarOpen: boolean;
   setSidebarOpen: (arg: boolean) => void;
@@ -20,6 +21,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const confirmDeleteRef = useRef<any>(null);
   const requestForm = useRef<{ open: () => void; close: () => void }>(null);
   const lessonValues = useLessons();
+  const { isAuthenticated } = useAuthentication();
 
   return (
     <LessonContext.Provider
@@ -62,6 +64,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
           {
             'translate-x-0': sidebarOpen,
             '-translate-x-full': !sidebarOpen,
+            'hidden': !isAuthenticated
           },
         )}
       >
