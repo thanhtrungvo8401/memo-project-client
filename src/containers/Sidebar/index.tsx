@@ -1,6 +1,5 @@
 import { useContext, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
-import Logo from '../../images/logo/logo-icon.svg';
 import { AppRoutes } from '../../constants/routes';
 import MaterialListing from './MaterialsListing';
 import cl from 'classnames';
@@ -9,6 +8,7 @@ import Button from '../../components/Button';
 import { LessonContext, useLessons } from './contexts';
 import DeleteLessonConfirmModal from './MaterialsListing/components/DeleteLessonConfirmModal';
 import { AuthenticationContext } from '../contexts';
+import Logo from '../../components/Logo';
 interface SidebarProps {
   sidebarOpen: boolean;
   setSidebarOpen: (arg: boolean) => void;
@@ -70,9 +70,12 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       >
         {/* <!-- SIDEBAR HEADER --> */}
         <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
-          <NavLink to={AppRoutes.Home} className={'flex gap-2'}>
-            <img src={Logo} alt="Logo" />
-            <h2 className="text-white text-title-md2 font-semibold">Memo</h2>
+          <NavLink to={AppRoutes.Home} className={'flex gap-4'}>
+            <Logo />
+
+            <h2 className="text-white text-title-md2 font-semibold">
+              The memo
+            </h2>
           </NavLink>
 
           <button

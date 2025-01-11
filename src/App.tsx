@@ -23,7 +23,7 @@ function App() {
             index
             element={
               <>
-                <HtmlTitle title="Memo.com - Fantastic tool for mastering English" />
+                <HtmlTitle title="The memo - Fantastic tool for mastering English" />
                 <Dashboard />
               </>
             }
@@ -33,7 +33,7 @@ function App() {
             path={`${AppRoutes.LearningMaterials}/:id`}
             element={
               <>
-                <HtmlTitle title="Memo.com - Learning materials archive" />
+                <HtmlTitle title="The memo - Learning materials archive" />
                 <LearningMaterialDetail />
               </>
             }

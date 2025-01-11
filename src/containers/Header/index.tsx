@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import DropdownUser from './DropdownUser';
-import LogoIcon from '../../images/logo/logo-icon.svg';
 import DarkModeSwitcher from './DarkModeSwitcher';
 import cl from 'classnames';
 import Button from '../../components/Button';
@@ -9,6 +8,7 @@ import Authentication, {
 } from '../Authentication';
 import React, { useContext } from 'react';
 import { AuthenticationContext } from '../contexts';
+import Logo from '../../components/Logo';
 
 const Header = (props: {
   sidebarOpen: string | boolean | undefined;
@@ -67,14 +67,17 @@ const Header = (props: {
               {/* <!-- Hamburger Toggle BTN --> */}
 
               <Link className="block flex-shrink-0 lg:hidden" to="/">
-                <img src={LogoIcon} alt="Logo" />
+                <Logo />
               </Link>
             </div>
           )}
 
           {!isAuthenticated && (
-            <Link className="block flex-shrink-0" to="/">
-              <img src={LogoIcon} alt="Logo" />
+            <Link className="flex-shrink-0 items-center gap-4 flex" to="/">
+              <Logo />
+              <h2 className="text-black dark:text-white text-title-md2 font-semibold">
+                The memo
+              </h2>
             </Link>
           )}
 
