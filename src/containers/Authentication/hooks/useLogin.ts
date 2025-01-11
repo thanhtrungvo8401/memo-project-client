@@ -1,11 +1,14 @@
+import React from 'react';
 import useApi from '../../../hooks/useApi';
 import { toast } from 'react-toastify';
 
 export default function useLogin() {
   const { post } = useApi();
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const login = async (data: { username: string; password: string }) => {
     try {
+      setIsLoading(true);
       const res = await post(`/login`, data);
       toast('Login successfully', { type: 'success' });
 
@@ -23,10 +26,13 @@ export default function useLogin() {
       }
 
       return false;
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return {
     login,
+    isLoading,
   };
 }

@@ -3,6 +3,7 @@ import Button from '../../components/Button';
 import Input from '../../components/Input';
 import useLogin from './hooks/useLogin';
 import { AuthenticationContext } from '../contexts';
+import Loading from '../../components/Loading';
 
 const Header = (props: { onClose: () => void }) => {
   return (
@@ -42,7 +43,7 @@ const LoginForm = (props: {
   closeForm: () => void;
   openSignupForm: () => void;
 }) => {
-  const { login } = useLogin();
+  const { login, isLoading } = useLogin();
   const { saveUserAuthentication } = useContext(AuthenticationContext);
   const [data, setData] = React.useState<{
     username: string;
@@ -121,6 +122,8 @@ const LoginForm = (props: {
               Sign up
             </span>
           </p>
+
+          <Loading active={isLoading} />
         </form>
       </>
     </>
